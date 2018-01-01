@@ -1,0 +1,77 @@
+菜单
+售货员登录
+管理员登录
+找回密码
+
+售货员菜单
+改密码
+登记出售商品（行为顾客拿来一堆商品，售货员依次登记商品，最后按下确认后得出总价，并计算找零）
+
+管理员菜单
+改密码
+售货员管理
+商品管理
+查看销售情况
+
+
+
+
+超级管理员功能
+1，	登录
+2，	改密码
+3，	找回密码（在忘记密码的情况下，根据账号和姓名重新设置）
+4，	添加售货员（账号自动生成，密码默认123456，只需要添加姓名，并显示成功后的管理员信息，以便知道账号）
+5，	删除售货员（根据账号删除）
+6，	修改售货员（根据账号修改）
+7，	商品操作（添加商品（查询商品是否存在，若在，不添加），修改商品（价格和库存数量），删除商品（查询商品是否存在，若在，删除），查询商品）
+8，	查看超市销售量（a. 某一天商品销售情况（按售出数量排序）b. 某一天某个商品销售情况）
+销售情况（名称，售出价格，数量，销量，备注（小于10库存不足））
+售货员
+1，	登录
+2，	改密码
+3，	找回密码（在忘记密码的情况下，根据账号和姓名重新设置）
+4，	录入出售商品（扫描商品编号（相当条码）获取商品价格，然后获取给商品数量再更新两个商品信息表，一个数量减，一个加，然后累计价格，收入顾客收入计算找零。）
+
+
+售货员
+姓名，账号，密码
+管理员
+姓名，账号，密码
+商品信息
+编号（条形码），名称，存货数量，售价，备注（库存紧张）
+商品售出记录表（记录商品每天的销售情况，价格会变化，必须建立价格字段）
+
+
+
+编号（条形码），售出数量，时间，售出价格
+
+
+CREATE TABLE solder
+(
+solder_number INT not null PRIMARY KEY auto_increment,
+solder_password char(6) not null default ‘123456’,
+solder_name CHAR(10) NOT NULL
+)
+CREATE TABLE manager
+(
+manager_number INT  not null PRIMARY KEY auto_increment,
+manager_password char(6) not null default ‘123456’,
+manager_name CHAR(10) NOT NULL
+)
+CREATE TABLE goods
+(
+goods_number INT PRIMARY KEY,
+goods_name CHAR(10) NOT NULL,
+store_amount INT not null,
+now_price NUMERIC(7,2) not null
+)
+CREATE TABLE goodssold
+(
+goods_number INT not null,
+sold_amount INT not null,
+sold_price NUMERIC(7,2) not null,
+sold_time DATE not null,
+constraint goodssold_fk foreign key(goods_number) references goods(goods_number)
+)
+
+
